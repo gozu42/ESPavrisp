@@ -60,6 +60,7 @@
 // A clock slow enough for an ATtiny85 @ 1 MHz, is a reasonable default:
 
 #define SPI_CLOCK 		(1000000/6)
+//#define SPI_CLOCK 		(128000/6)
 
 // Select hardware or software SPI, depending on SPI clock.
 // Currently only for AVR, for other architectures (Due, Zero,...), hardware SPI
@@ -224,8 +225,8 @@ void display_init()
   display.drawString(16 + 39 + 2, 49, "Err");
   display.drawString(16 + 39 + 39 + 2, 49, "Pmod");
 
-  display.drawString(0, 0, "http://github.com/nathanjel/");
-  sprintf(textbuf, "espavrisp v0.1 @ %d", SPI_CLOCK);
+  display.drawString(0, 0, "http://github.com/gozu42/");
+  sprintf(textbuf, "espavrisp v0.23 @ %d", SPI_CLOCK);
   display.drawString(0, 14, textbuf);
   
   display.display();
@@ -239,6 +240,11 @@ void signal_ready_status() {
 void setup() {
   pinMode(PIN_VEXT,OUTPUT);
   digitalWrite(PIN_VEXT, LOW);
+
+  pinMode(PIN_OLED_RST,OUTPUT);
+  digitalWrite(PIN_OLED_RST, LOW);
+  delay(250);
+  digitalWrite(PIN_OLED_RST, HIGH);
 
   SERIAL.begin(BAUDRATE);
   SERIAL.println("BOOT");
